@@ -1,0 +1,9 @@
+---
+config-version: 1.0
+auto-config-update: true
+commands:
+  todos:
+    command: "todos"
+    description: "Shows all your todos"
+    aliases: []
+...
