@@ -1,5 +1,6 @@
 # SignTodos
-A new way to make todolists in minecraft
+A new way to make todolists in minecraft!
+You can download the .phar from <a href="https://poggit.pmmp.io/ci/Wertzui123/SignTodos/SignTodos">poggit</a>.
 # Idea
 I was building some buildings when I had an idea: Todos like in PHPStorm, but for minecraft. And that's the purpose of this plugin.
 # Todo pattern
