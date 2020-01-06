@@ -4,8 +4,6 @@ version: 1.0
 api: 3.0.0
 author: Wertzui123
 load: POSTWORLD
-depend:
-  - FormAPI
 description: Ever forgot what you want to change in your buildings? Now you don't have to worry anymore!
 website: https://github.com/Wertzui123
 permissions:
