@@ -3,8 +3,11 @@ A new way to make todolists in minecraft!
 You can download the .phar from <a href="https://poggit.pmmp.io/p/SignTodos">poggit</a>.
 You always forget what you wanted to do in your minecraft world, but you don't want to use external todolists? Then this plugin is the perfect tool for you!
 <br>SignTodos lets you create a todolists inside minecraft using a text pattern on signs and view all your todosigns via a command.
-# Idea
-This plugin is made to be a tool for all builders, players or admins to never forget what you wanted todo.
+# How to use?
+1. Place a sign
+2. Write something like "//TODO: Finish this building" on it. You can view all todo patterns below
+3. You can now view all your signs-todos with /todos
+
 # Todo pattern
 The pattern for todos is:
 
