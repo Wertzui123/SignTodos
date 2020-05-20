@@ -9,7 +9,7 @@ use pocketmine\Player;
 use Wertzui123\SignTodos\Main;
 use jojoe77777\FormAPI\SimpleForm;
 
-class todos extends Command
+class todos extends Command implements PluginIdentifiableCommand
 {
 
     private $plugin;
