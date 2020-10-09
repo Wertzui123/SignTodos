@@ -7,10 +7,13 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use Wertzui123\SignTodos\commands\todos;
 
-class Main extends PluginBase {
+class Main extends PluginBase
+{
 
-    const PATTERN = "/^\/\/ ?todo: /i";
-    const CONFIG_VERSION = 1.0;
+    /** @var string */
+    const PATTERN = "";
+    /** @var float */
+    const CONFIG_VERSION = 1.1;
 
     // TODO: SQL Database support
 
@@ -23,29 +26,30 @@ class Main extends PluginBase {
     public function onEnable()
     {
         $this->checkConfig();
-        $this->stringsFile = new Config($this->getDataFolder().'strings.yml', Config::YAML);
-        $this->todosFile = new Config($this->getDataFolder().'todos.json', Config::JSON);
+        $this->stringsFile = new Config($this->getDataFolder() . 'strings.yml', Config::YAML);
+        $this->todosFile = new Config($this->getDataFolder() . 'todos.json', Config::JSON);
         $this->todos = $this->todosFile->getAll();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
-        $commandData = ['command' => $this->getConfig()->getNested('commands.todos.command'), 'description' => $this->getConfig()->getNested('commands.todos.description'), 'aliases' => $this->getConfig()->getNested('commands.todos.aliases')];
+        $commandData = ['command' => $this->getConfig()->getNested('commands.todos.command'), 'description' => $this->getConfig()->getNested('commands.todos.description'), 'usage' => $this->getConfig()->getNested('commands.todos.usage'), 'aliases' => $this->getConfig()->getNested('commands.todos.aliases')];
         $this->getServer()->getCommandMap()->register("SignTodos", new todos($this, $commandData));
     }
 
     /**
      * Config updater
      */
-    public function checkConfig(){
-        if(!file_exists($this->getDataFolder().'config.yml') || !file_exists($this->getDataFolder().'strings.yml')){
+    public function checkConfig()
+    {
+        if (!file_exists($this->getDataFolder() . 'config.yml') || !file_exists($this->getDataFolder() . 'strings.yml')) {
             $this->saveResource('config.yml');
             $this->saveResource('strings.yml');
             return;
         }
-        if(($cfgversion = $this->getConfig()->get('config-version', -1)) !== self::CONFIG_VERSION){
+        if (($cfgversion = $this->getConfig()->get('config-version', -1)) !== self::CONFIG_VERSION) {
             $this->getLogger()->warning("Your config is outdated!");
-            if($this->getConfig()->get('auto-config-update', true)){
+            if ($this->getConfig()->get('auto-config-update', true)) {
                 $this->getLogger()->info('Your config is being updated due auto-config-update...');
-                rename($this->getDataFolder().'config.yml', $this->getDataFolder().'config-'.$cfgversion.'.yml');
-                rename($this->getDataFolder().'strings.yml', $this->getDataFolder().'strings-'.$cfgversion.'.yml');
+                rename($this->getDataFolder() . 'config.yml', $this->getDataFolder() . 'config-' . $cfgversion . '.yml');
+                rename($this->getDataFolder() . 'strings.yml', $this->getDataFolder() . 'strings-' . $cfgversion . '.yml');
                 $this->saveResource('config.yml');
                 $this->saveResource('messages.yml');
             }
@@ -58,7 +62,8 @@ class Main extends PluginBase {
      * @param array $replace
      * @return string
      */
-    public function getString($key, $replace = []){
+    public function getString($key, $replace = [])
+    {
         return str_replace(array_keys($replace), $replace, $this->stringsFile->getNested($key, null) ?? "");
     }
 
@@ -68,23 +73,25 @@ class Main extends PluginBase {
      * @param array $replace
      * @return string
      */
-    public function getMessage($key, $replace = []){
+    public function getMessage($key, $replace = [])
+    {
         return $this->getString($key, $replace);
     }
 
     /**
      * @api
+     * Returns all todos of the given player
      * @param Player $player
      * @return array
      */
-    public function getTodosByPlayer(Player $player){
-        $todos = [];
-        foreach ($this->todos as $owner => $ptodos){
-            if($owner === $player->getName()) $todos = $ptodos;
-        }
-        return $todos;
+    public function getTodosByPlayer(Player $player)
+    {
+        return $todos->todos[$player->getName()] ?? [];
     }
 
+    /**
+     * Called
+     */
     public function onDisable()
     {
         $this->todosFile->setAll($this->todos);
@@ -92,4 +99,5 @@ class Main extends PluginBase {
         unset($this->todosFile);
         unset($this->todos);
     }
+
 }

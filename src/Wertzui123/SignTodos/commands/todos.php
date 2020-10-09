@@ -4,8 +4,10 @@ namespace Wertzui123\SignTodos\commands;
 
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
+use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\level\Position;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use Wertzui123\SignTodos\Main;
 use jojoe77777\FormAPI\SimpleForm;
 
@@ -23,21 +25,21 @@ class todos extends Command implements PluginIdentifiableCommand
 
     public function execute(CommandSender $sender, string $commandLabel, array $args)
     {
-        if(!$sender instanceof Player){
+        if (!$sender instanceof Player) {
             $sender->sendMessage($this->plugin->getMessage('cmd.todos.runIngame'));
             return;
         }
-        if(!$sender->hasPermission($this->getPermission())){
+        if (!$sender->hasPermission($this->getPermission())) {
             $sender->sendMessage($this->plugin->getMessage('cmd.todos.noPermission'));
             return;
         }
-        if(count($this->plugin->getTodosByPlayer($sender)) < 1){
+        if (count($this->plugin->getTodosByPlayer($sender)) < 1) {
             $sender->sendMessage($this->plugin->getMessage('cmd.todos.empty'));
             return;
         }
         $todos = $this->plugin->getTodosByPlayer($sender);
-        $form = new SimpleForm(function (Player $player, $data) use ($todos){
-            if(is_null($data)) return;
+        $form = new SimpleForm(function (Player $player, $data) use ($todos) {
+            if (is_null($data)) return;
             $data = $todos[$data];
             $player->sendMessage($this->plugin->getMessage('cmd.todos.success', ['text' => $data['text']]));
             $player->teleport(new Position($data['position']['x'], $data['position']['y'], $data['position']['z'], $this->plugin->getServer()->getLevelByName($data['position']['level'])));
@@ -49,4 +51,10 @@ class todos extends Command implements PluginIdentifiableCommand
         }
         $sender->sendForm($form);
     }
+
+    public function getPlugin(): Plugin
+    {
+        return $this->plugin;
+    }
+
 }

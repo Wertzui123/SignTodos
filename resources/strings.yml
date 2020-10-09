@@ -8,7 +8,7 @@ cmd:
 ui:
   todos:
     title: "Your todolist"
-    content: "Choose one todo to teleport to it"
-format: "{text} ({x}, {y}, {z})" # {text} for the signs text, {x} for the signs x, {y} for the signs y, {z} for the signs z
-cannotDestroyOthers: "§cYou cannot destroy signtodos of other players!"
+    content: "Choose a todo to teleport to it:"
+format: "{text} ({x}, {y}, {z})" # {text} for the signs text, {x} for the signs x coordinate, {y} for the signs y coordinate, {z} for the signs z coordinate
+cannotDestroyOthers: "§cYou cannot destroy todo-signs of other players!"
 ...
