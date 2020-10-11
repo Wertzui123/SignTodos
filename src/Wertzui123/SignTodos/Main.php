@@ -89,9 +89,6 @@ class Main extends PluginBase
         return $todos->todos[$player->getName()] ?? [];
     }
 
-    /**
-     * Called
-     */
     public function onDisable()
     {
         $this->todosFile->setAll($this->todos);
