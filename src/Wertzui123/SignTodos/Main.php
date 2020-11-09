@@ -11,7 +11,7 @@ class Main extends PluginBase
 {
 
     /** @var string */
-    const PATTERN = "";
+    const PATTERN = "/^\/\/ ?todo: /i";
     /** @var float */
     const CONFIG_VERSION = 1.1;
 
