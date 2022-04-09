@@ -1,14 +1,15 @@
 ---
-cmd:
+command:
   todos:
     runIngame: "§cThis command can only be used ingame!"
     noPermission: "§cYou are not allowed to use this command!"
     empty: "§cYou don't have any todos!"
+    invalidPosition: "§cThe position of this todo was invalid and it was therefore removed!"
     success: "§aYou are being teleported..." # You can use {text} for the text of the sign
 ui:
   todos:
     title: "Your todolist"
     content: "Choose a todo to teleport to it:"
-format: "{text} ({x}, {y}, {z})" # {text} for the signs text, {x} for the signs x coordinate, {y} for the signs y coordinate, {z} for the signs z coordinate
+format: "{text} ({x}, {y}, {z})" # {text} for the sign's text, {x} for the sign's x coordinate, {y} for the sign's y coordinate, {z} for the sign's z coordinate
 cannotDestroyOthers: "§cYou cannot destroy todo-signs of other players!"
 ...

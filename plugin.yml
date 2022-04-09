@@ -1,23 +1,17 @@
 name: SignTodos
 main: Wertzui123\SignTodos\Main
-version: 1.1.1
-api: 3.0.0
+version: 1.2
+api: 4.0.0
 author: Wertzui123
 load: POSTWORLD
 description: Ever forgot what you want to change in your buildings? Now you don't have to worry anymore!
 website: https://github.com/Wertzui123
+depend:
+  - FormAPI
 permissions:
-  signtodos:
+  signtodos.command.todos:
+    default: true
+    description: Permission for the /todos command
+  signtodos.destroy.others:
     default: op
-    description: Permission for all SignTodos Features
-    children:
-      signtodos.cmd:
-        default: op
-        description: Permission for all SignTodos Commands
-        children:
-          signtodos.cmd.todos:
-            default: op
-            description: Permission for the /todos Command
-      signtodos.destroy.others:
-        default: op
-        description: Permission for destroying others signtodos
+    description: Permission for destroying others todo-signs

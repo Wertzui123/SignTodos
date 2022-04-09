@@ -2,7 +2,7 @@
 
 namespace Wertzui123\SignTodos;
 
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use Wertzui123\SignTodos\commands\todos;
@@ -11,9 +11,9 @@ class Main extends PluginBase
 {
 
     /** @var string */
-    const PATTERN = "/^\/\/ ?todo: /i";
+    const PATTERN = '/^\/\/ *todo: */i';
     /** @var float */
-    const CONFIG_VERSION = 1.1;
+    const CONFIG_VERSION = 1.2;
 
     // TODO: SQL Database support
 
@@ -23,7 +23,7 @@ class Main extends PluginBase
     private $todosFile;
     public $todos = []; // ["Steve" => [0 => ["position" => ["x" => 0, "y" = 0, "z" = 0, "level" => "world"], "text => "this is a example"]]]
 
-    public function onEnable()
+    public function onEnable(): void
     {
         $this->checkConfig();
         $this->stringsFile = new Config($this->getDataFolder() . 'strings.yml', Config::YAML);
@@ -44,14 +44,14 @@ class Main extends PluginBase
             $this->saveResource('strings.yml');
             return;
         }
-        if (($cfgversion = $this->getConfig()->get('config-version', -1)) !== self::CONFIG_VERSION) {
+        if (($configVersion = $this->getConfig()->get('config-version', -1)) !== self::CONFIG_VERSION) {
             $this->getLogger()->warning("Your config is outdated!");
             if ($this->getConfig()->get('auto-config-update', true)) {
-                $this->getLogger()->info('Your config is being updated due auto-config-update...');
-                rename($this->getDataFolder() . 'config.yml', $this->getDataFolder() . 'config-' . $cfgversion . '.yml');
-                rename($this->getDataFolder() . 'strings.yml', $this->getDataFolder() . 'strings-' . $cfgversion . '.yml');
+                $this->getLogger()->info('Your config is being updated to the latest version automatically...');
+                rename($this->getDataFolder() . 'config.yml', $this->getDataFolder() . 'config-' . $configVersion . '.yml');
+                rename($this->getDataFolder() . 'strings.yml', $this->getDataFolder() . 'strings-' . $configVersion . '.yml');
                 $this->saveResource('config.yml');
-                $this->saveResource('messages.yml');
+                $this->saveResource('strings.yml');
             }
         }
     }
@@ -64,7 +64,7 @@ class Main extends PluginBase
      */
     public function getString($key, $replace = [])
     {
-        return str_replace(array_keys($replace), $replace, $this->stringsFile->getNested($key, null) ?? "");
+        return str_replace(array_keys($replace), $replace, $this->stringsFile->getNested($key) ?? '');
     }
 
     /**
@@ -86,15 +86,13 @@ class Main extends PluginBase
      */
     public function getTodosByPlayer(Player $player)
     {
-        return $todos->todos[$player->getName()] ?? [];
+        return $this->todos[$player->getName()] ?? [];
     }
 
-    public function onDisable()
+    public function onDisable(): void
     {
         $this->todosFile->setAll($this->todos);
         $this->todosFile->save();
-        unset($this->todosFile);
-        unset($this->todos);
     }
 
 }
