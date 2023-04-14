@@ -5,7 +5,7 @@ namespace Wertzui123\SignTodos;
 use pocketmine\player\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
-use Wertzui123\SignTodos\commands\todos;
+use Wertzui123\SignTodos\commands\TodosCommand;
 
 class Main extends PluginBase
 {
@@ -31,7 +31,7 @@ class Main extends PluginBase
         $this->todos = $this->todosFile->getAll();
         $this->getServer()->getPluginManager()->registerEvents(new EventListener($this), $this);
         $commandData = ['command' => $this->getConfig()->getNested('commands.todos.command'), 'description' => $this->getConfig()->getNested('commands.todos.description'), 'usage' => $this->getConfig()->getNested('commands.todos.usage'), 'aliases' => $this->getConfig()->getNested('commands.todos.aliases')];
-        $this->getServer()->getCommandMap()->register("SignTodos", new todos($this, $commandData));
+        $this->getServer()->getCommandMap()->register("SignTodos", new TodosCommand($this, $commandData));
     }
 
     /**
