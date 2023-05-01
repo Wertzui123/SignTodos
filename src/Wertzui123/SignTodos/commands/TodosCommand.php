@@ -21,6 +21,7 @@ class TodosCommand extends Command implements PluginOwned
     {
         parent::__construct($data['command'], $data['description'], null, $data['aliases']);
         $this->setPermissions(['signtodos.command.todos']);
+        $this->setPermissionMessage($plugin->getMessage('command.todos.noPermission'));
         $this->plugin = $plugin;
     }
 
@@ -28,10 +29,6 @@ class TodosCommand extends Command implements PluginOwned
     {
         if (!$sender instanceof Player) {
             $sender->sendMessage($this->plugin->getMessage('command.todos.runIngame'));
-            return;
-        }
-        if (!$sender->hasPermission($this->getPermissions()[0])) {
-            $sender->sendMessage($this->plugin->getMessage('command.todos.noPermission'));
             return;
         }
         if (count($this->plugin->getTodosByPlayer($sender)) < 1) {
